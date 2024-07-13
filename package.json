@@ -1,0 +1,30 @@
+{
+  "name": "ecommerce-vue",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "animsition": "^4.0.2",
+    "bootstrap": "^5.3.3",
+    "daterangepicker": "^3.1.0",
+    "isotope-layout": "^3.0.6",
+    "jquery": "^3.7.1",
+    "magnific-popup": "^1.2.0",
+    "perfect-scrollbar": "^1.5.5",
+    "select2": "^4.1.0-rc.0",
+    "slick-carousel": "^1.8.1",
+    "sweetalert": "^2.1.2",
+    "vue": "^3.4.29",
+    "vue-router": "^4.4.0",
+    "vue-select": "^3.20.3"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.5",
+    "vite": "^5.3.1"
+  }
+}
