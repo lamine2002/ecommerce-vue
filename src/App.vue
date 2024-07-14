@@ -7,7 +7,7 @@ import ShopingCart from "./Pages/ShopingCart.vue";
 </script>
 
 <template>
-  <ShopingCart />
+  <Home2 />
 </template>
 
 <style scoped>
