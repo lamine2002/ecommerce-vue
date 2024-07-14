@@ -6,20 +6,20 @@ import {createRouter, createWebHistory} from "vue-router";
 
 const routes = [
     {
-        path: "/",
-        Component: Home
+        path: '/',
+        component: Home
     },
     {
-        path: "/shop",
-        Component: Products
+        path: '/shop',
+        component: Products
     },
     {
-        path: "/about",
-        Component: About
+        path: '/about',
+        component: About
     },
     {
-        path: "Contact",
-        Component: Contact
+        path: '/Contact',
+        component: Contact
     }
 ];
 
@@ -27,5 +27,6 @@ const router = createRouter({
     history: createWebHistory(),
     routes
 });
+
 
 export default router;
