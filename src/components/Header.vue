@@ -1,5 +1,7 @@
 <script setup>
 
+import Cart from "./Cart.vue";
+import Sidebar from "./Sidebar.vue";
 </script>
 
 <template>
@@ -207,6 +209,13 @@
       </div>
     </div>
   </header>
+
+  <!-- Sidebar -->
+  <Sidebar />
+
+  <!-- Cart -->
+  <Cart />
+
 </template>
 
 <style >
