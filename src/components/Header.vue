@@ -39,7 +39,7 @@ import Sidebar from "./Sidebar.vue";
         <nav class="limiter-menu-desktop container">
 
           <!-- Logo desktop -->
-          <router-link  to="//" class="logo">
+          <router-link  to="/" class="logo">
             <img src="/images/icons/logo-01.png" alt="IMG-LOGO">
           </router-link>
 
