@@ -39,40 +39,40 @@ import Sidebar from "./Sidebar.vue";
         <nav class="limiter-menu-desktop container">
 
           <!-- Logo desktop -->
-          <a href="#" class="logo">
+          <router-link  to="//" class="logo">
             <img src="/images/icons/logo-01.png" alt="IMG-LOGO">
-          </a>
+          </router-link>
 
           <!-- Menu desktop -->
           <div class="menu-desktop">
             <ul class="main-menu">
               <li>
-                <a href="index.html">Home</a>
-                <ul class="sub-menu">
-                  <li><a href="index.html">Homepage 1</a></li>
-                  <li><a href="home-02.html">Homepage 2</a></li>
-                  <li><a href="home-03.html">Homepage 3</a></li>
-                </ul>
+                <router-link to="/home">Accueil</router-link>
+<!--                <ul class="sub-menu">
+                  <li><router-link to="/index.html">Homepage 1</router-link></li>
+                  <li><router-link to="/home-02.html">Homepage 2</router-link></li>
+                  <li><router-link to="home-03.html">Homepage 3</router-link></li>
+                </ul>-->
               </li>
 
               <li>
-                <a href="product.html">Shop</a>
+                <router-link to="/shop">Produits</router-link>
               </li>
 
-              <li class="label1" data-label1="hot">
-                <a href="shoping-cart.html">Features</a>
-              </li>
+<!--              <li class="label1" data-label1="hot">
+                <router-link to="/">Features</router-link>
+              </li>-->
 
-              <li>
-                <a href="blog.html">Blog</a>
-              </li>
+<!--              <li>
+                <router-link to="/blog.html">Blog</router-link>
+              </li>-->
 
               <li class="active-menu">
-                <a href="about.html">About</a>
+                <router-link to="/about">A propos</router-link>
               </li>
 
               <li>
-                <a href="contact.html">Contact</a>
+                <router-link to="/contact">Contact</router-link>
               </li>
             </ul>
           </div>
@@ -101,7 +101,7 @@ import Sidebar from "./Sidebar.vue";
     <div class="wrap-header-mobile">
       <!-- Logo moblie -->
       <div class="logo-mobile">
-        <a href="index.html"><img src="/images/icons/logo-01.png" alt="IMG-LOGO"></a>
+        <a href=""><img src="/images/icons/logo-01.png" alt="IMG-LOGO"></a>
       </div>
 
       <!-- Icon header -->
@@ -160,11 +160,11 @@ import Sidebar from "./Sidebar.vue";
 
       <ul class="main-menu-m">
         <li>
-          <a href="index.html">Home</a>
+          <a href="">Home</a>
           <ul class="sub-menu-m">
-            <li><a href="index.html">Homepage 1</a></li>
+<!--            <li><a href="index.html">Homepage 1</a></li>
             <li><a href="home-02.html">Homepage 2</a></li>
-            <li><a href="home-03.html">Homepage 3</a></li>
+            <li><a href="home-03.html">Homepage 3</a></li>-->
           </ul>
           <span class="arrow-main-menu-m">
 						<i class="fa fa-angle-right" aria-hidden="true"></i>
@@ -172,23 +172,23 @@ import Sidebar from "./Sidebar.vue";
         </li>
 
         <li>
-          <a href="product.html">Shop</a>
+          <a href="">Shop</a>
         </li>
 
         <li>
-          <a href="shoping-cart.html" class="label1 rs1" data-label1="hot">Features</a>
+          <a href="" class="label1 rs1" data-label1="hot">Features</a>
         </li>
 
         <li>
-          <a href="blog.html">Blog</a>
+          <a href="">Blog</a>
         </li>
 
         <li>
-          <a href="about.html">About</a>
+          <a href="">About</a>
         </li>
 
         <li>
-          <a href="contact.html">Contact</a>
+          <a href="">Contact</a>
         </li>
       </ul>
     </div>

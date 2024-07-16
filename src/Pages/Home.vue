@@ -1,33 +1,8 @@
 <script setup>
-import { onMounted } from 'vue';
-import Select2 from 'select2';
+
 import 'select2/dist/css/select2.min.css';
 import Header from "../components/Header.vue";
-import Sidebar from "../components/Sidebar.vue";
-import Cart from "../components/Cart.vue";
 
-const initializeSelect2 = () => {
-  const selectElements = document.querySelectorAll('.js-select2');
-  selectElements.forEach((selectElement) => {
-    Select2(selectElement, {
-      minimumResultsForSearch: 20,
-      dropdownParent: selectElement.nextElementSibling
-    });
-  });
-};
-
-// Fonction pour gérer l'affichage du modal
-const showModal = () => {
-  // Code pour afficher le modal
-  document.querySelectorAll('.js-modal1').forEach(modal => {
-    modal.classList.add('show-modal');
-    initializeSelect2();
-  });
-};
-
-onMounted(() => {
-  showModal();
-});
 </script>
 
 
@@ -36,10 +11,6 @@ onMounted(() => {
   <div class="animsition">
     <!-- Header -->
     <Header />
-
-
-
-
 
     <!-- Slider -->
     <section class="section-slide">
