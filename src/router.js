@@ -14,7 +14,13 @@ const routes = [
 
 const router = createRouter({
     history: createWebHistory(),
-    routes
+    routes,
 });
+
+router.beforeEach((to, from, next) => {
+    console.log('Navigation vers la route', to);
+    next();
+});
+
 
 export default router;
