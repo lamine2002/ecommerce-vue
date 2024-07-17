@@ -2,6 +2,10 @@
 
 import Cart from "./Cart.vue";
 import Sidebar from "./Sidebar.vue";
+import router from "../router.js";
+import {ref} from "vue";
+
+
 </script>
 
 <template>
@@ -34,7 +38,7 @@ import Sidebar from "./Sidebar.vue";
               <li>
                 <a href="/shop">Produits</a>
               </li>
-              <li class="active-menu">
+              <li >
                 <a href="/about">A propos</a>
               </li>
               <li>
@@ -122,6 +126,7 @@ import Sidebar from "./Sidebar.vue";
 #sidebar {
   color: #000;
 }
+
 </style>
 
 
