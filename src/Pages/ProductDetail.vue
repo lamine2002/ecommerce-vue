@@ -1,6 +1,27 @@
 <script setup>
 
 import Header from "../components/Header.vue";
+import {useRoute} from "vue-router";
+import axios from "axios";
+import {ref} from "vue";
+
+const route = useRoute();
+const productId = route.params.id;
+const product = ref(null);
+const productImage = ref('');
+// console.log("L'id du produit est : " + productId);
+
+axios.get("http://127.0.0.1:8000/api/product/" + productId)
+  .then(response => {
+    product.value = response.data.product;
+    productImage.value = "http://127.0.0.1:8000/storage/" + response.data.product.photo;
+    console.log(productImage.value);
+  })
+  .catch(error => {
+    alert(error.response.data.message);
+  });
+
+
 </script>
 
 <template>
@@ -19,31 +40,31 @@ import Header from "../components/Header.vue";
                 <div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
 
                 <div class="slick3 gallery-lb">
-                  <div class="item-slick3" data-thumb="images/product-detail-01.jpg">
+                  <div class="item-slick3" :data-thumb="productImage">
                     <div class="wrap-pic-w pos-relative">
-                      <img src="/images/product-detail-01.jpg" alt="IMG-PRODUCT">
+                      <img :src="productImage" alt="IMG-PRODUCT">
 
-                      <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="/images/product-detail-01.jpg">
+                      <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" :href="productImage">
                         <i class="fa fa-expand"></i>
                       </a>
                     </div>
                   </div>
 
-                  <div class="item-slick3" data-thumb="images/product-detail-02.jpg">
+                  <div class="item-slick3" :data-thumb="productImage">
                     <div class="wrap-pic-w pos-relative">
-                      <img src="/images/product-detail-02.jpg" alt="IMG-PRODUCT">
+                      <img :src="productImage" alt="IMG-PRODUCT">
 
-                      <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="/images/product-detail-02.jpg">
+                      <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" :href="productImage">
                         <i class="fa fa-expand"></i>
                       </a>
                     </div>
                   </div>
 
-                  <div class="item-slick3" data-thumb="images/product-detail-03.jpg">
+                  <div class="item-slick3" :data-thumb="productImage">
                     <div class="wrap-pic-w pos-relative">
-                      <img src="/images/product-detail-03.jpg" alt="IMG-PRODUCT">
+                      <img :src="productImage" alt="IMG-PRODUCT">
 
-                      <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="/images/product-detail-03.jpg">
+                      <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" :href="productImage">
                         <i class="fa fa-expand"></i>
                       </a>
                     </div>
@@ -56,11 +77,11 @@ import Header from "../components/Header.vue";
           <div class="col-md-6 col-lg-5 p-b-30">
             <div class="p-r-50 p-t-5 p-lr-0-lg">
               <h4 class="mtext-105 cl2 js-name-detail p-b-14">
-                Lightweight Jacket
+                {{ product ? product.name : '' }}
               </h4>
 
               <span class="mtext-106 cl2">
-							$58.79
+							${{ product ? product.price : '' }}.55
 						</span>
 
               <p class="stext-102 cl3 p-t-23">
@@ -122,7 +143,7 @@ import Header from "../components/Header.vue";
                     </div>
 
                     <button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
-                      Add to cart
+                      Ajouter au panier
                     </button>
                   </div>
                 </div>
@@ -162,11 +183,11 @@ import Header from "../components/Header.vue";
               </li>
 
               <li class="nav-item p-b-10">
-                <a class="nav-link" data-toggle="tab" href="#information" role="tab">Additional information</a>
+                <a class="nav-link" data-toggle="tab" href="#information" role="tab">Information additionnelle</a>
               </li>
 
               <li class="nav-item p-b-10">
-                <a class="nav-link" data-toggle="tab" href="#reviews" role="tab">Reviews (1)</a>
+                <a class="nav-link" data-toggle="tab" href="#reviews" role="tab">Commentaires (1)</a>
               </li>
             </ul>
 
@@ -783,7 +804,7 @@ import Header from "../components/Header.vue";
                   <div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
 
                   <div class="slick3 gallery-lb">
-                    <div class="item-slick3" data-thumb="images/product-detail-01.jpg">
+                    <div class="item-slick3" data-thumb="/images/product-detail-01.jpg">
                       <div class="wrap-pic-w pos-relative">
                         <img src="/images/product-detail-01.jpg" alt="IMG-PRODUCT">
 
@@ -793,7 +814,7 @@ import Header from "../components/Header.vue";
                       </div>
                     </div>
 
-                    <div class="item-slick3" data-thumb="images/product-detail-02.jpg">
+                    <div class="item-slick3" data-thumb="/images/product-detail-02.jpg">
                       <div class="wrap-pic-w pos-relative">
                         <img src="/images/product-detail-02.jpg" alt="IMG-PRODUCT">
 
@@ -803,7 +824,7 @@ import Header from "../components/Header.vue";
                       </div>
                     </div>
 
-                    <div class="item-slick3" data-thumb="images/product-detail-03.jpg">
+                    <div class="item-slick3" data-thumb="/images/product-detail-03.jpg">
                       <div class="wrap-pic-w pos-relative">
                         <img src="/images/product-detail-03.jpg" alt="IMG-PRODUCT">
 

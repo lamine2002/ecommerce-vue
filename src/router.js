@@ -13,7 +13,11 @@ const routes = [
     { path: '/about', component: About },
     { path: '/contact', component: Contact },
     {path: '/shoping-cart', component: ShopingCart},
-    {path: '/product-detail', component: ProductDetail}
+    {
+        path: '/product-detail/:id',
+        component: ProductDetail,
+        props: true
+    }
 ];
 
 const router = createRouter({
