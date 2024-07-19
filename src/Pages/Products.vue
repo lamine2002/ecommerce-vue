@@ -289,7 +289,7 @@ axios.get("http://127.0.0.1:8000/api/products").then((response) => {
                   </a>
 
                   <span class="stext-105 cl3">
-									${{product.price}}.50
+									${{product.price}}.55
 								</span>
                 </div>
 
