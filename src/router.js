@@ -5,6 +5,8 @@ import About from './Pages/About.vue';
 import Contact from './Pages/Contact.vue';
 import ShopingCart from "./Pages/ShopingCart.vue";
 import ProductDetail from "./Pages/ProductDetail.vue";
+import Checkout from "./Pages/Checkout.vue";
+
 
 const routes = [
     { path: '/', component: Home },
@@ -17,6 +19,10 @@ const routes = [
         path: '/product-detail/:id',
         component: ProductDetail,
         props: true
+    },
+    {
+        path: '/checkout',
+        component: Checkout
     }
 ];
 

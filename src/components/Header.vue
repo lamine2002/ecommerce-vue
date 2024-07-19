@@ -15,7 +15,7 @@ const updateNumberOfItems = () => {
 watch(cartState.items, () => {
   updateNumberOfItems();
 });
-updateNumberOfItems();
+
 
 </script>
 
