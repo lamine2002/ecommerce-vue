@@ -4,24 +4,32 @@ import Header from "../components/Header.vue";
 import {useRoute} from "vue-router";
 import axios from "axios";
 import {ref} from "vue";
+import {addToCart} from "../state/cartState.js";
 
 const route = useRoute();
 const productId = route.params.id;
 const product = ref(null);
 const productImage = ref('');
+const quantity = ref(1);
 // console.log("L'id du produit est : " + productId);
 
 axios.get("http://127.0.0.1:8000/api/product/" + productId)
   .then(response => {
     product.value = response.data.product;
     productImage.value = "http://127.0.0.1:8000/storage/" + response.data.product.photo;
-    console.log(productImage.value);
+    // console.log(response.data.product);
   })
   .catch(error => {
     alert(error.response.data.message);
   });
 
+console.log(quantity.value);
 
+const addToCartHandler = () => {
+  if (product.value && quantity.value > 0) {
+    addToCart({ ...product.value, price: parseFloat(product.value.price), quantity: quantity.value });
+  }
+};
 </script>
 
 <template>
@@ -131,18 +139,18 @@ axios.get("http://127.0.0.1:8000/api/product/" + productId)
                 <div class="flex-w flex-r-m p-b-10">
                   <div class="size-204 flex-w flex-m respon6-next">
                     <div class="wrap-num-product flex-w m-r-20 m-tb-10">
-                      <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
+                      <div @click="quantity > 1 ? quantity-- : 1"  class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
                         <i class="fs-16 zmdi zmdi-minus"></i>
                       </div>
 
-                      <input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product" value="1">
+                      <input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product" value="1" v-model="quantity">
 
-                      <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
+                      <div @click="quantity < product.stock ? quantity++ : 1" class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
                         <i class="fs-16 zmdi zmdi-plus"></i>
                       </div>
                     </div>
 
-                    <button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
+                    <button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail " @click="addToCartHandler">
                       Ajouter au panier
                     </button>
                   </div>

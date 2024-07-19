@@ -3,8 +3,19 @@
 import Cart from "./Cart.vue";
 import Sidebar from "./Sidebar.vue";
 import router from "../router.js";
-import {ref} from "vue";
+import {ref, watch} from "vue";
+import {cartState} from "../state/cartState";
 
+const numberOfItems = ref(0);
+
+const updateNumberOfItems = () => {
+  numberOfItems.value = cartState.items.length;
+};
+
+watch(cartState.items, () => {
+  updateNumberOfItems();
+});
+updateNumberOfItems();
 
 </script>
 
@@ -50,7 +61,8 @@ import {ref} from "vue";
             <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-modal-search">
               <i class="zmdi zmdi-search"></i>
             </div>
-            <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart" data-notify="2">
+            <!--      PAnier       -->
+            <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart" :data-notify="numberOfItems">
               <i class="zmdi zmdi-shopping-cart"></i>
             </div>
             <div class="flex-c-m h-full p-lr-19">
