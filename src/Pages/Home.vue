@@ -2,7 +2,18 @@
 
 import 'select2/dist/css/select2.min.css';
 import Header from "../components/Header.vue";
+import axios from "axios";
+import {ref} from "vue";
 
+const products = ref([]);
+
+axios.get("http://127.0.0.1:8000/api/products").then((response) => {
+  products.value = response.data.products;
+  console.log(products.value);
+})
+.catch((error) => {
+  alert(error.response.data.message);
+});
 </script>
 
 
@@ -32,7 +43,7 @@ import Header from "../components/Header.vue";
                 </div>
 
                 <div class="layer-slick1 animated visible-false" data-appear="zoomIn" data-delay="1600">
-                  <a href="product.html" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
+                  <a href="/shop" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
                     Shop Now
                   </a>
                 </div>
@@ -56,7 +67,7 @@ import Header from "../components/Header.vue";
                 </div>
 
                 <div class="layer-slick1 animated visible-false" data-appear="slideInUp" data-delay="1600">
-                  <a href="product.html" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
+                  <a href="/shop" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
                     Shop Now
                   </a>
                 </div>
@@ -80,7 +91,7 @@ import Header from "../components/Header.vue";
                 </div>
 
                 <div class="layer-slick1 animated visible-false" data-appear="rotateIn" data-delay="1600">
-                  <a href="product.html" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
+                  <a href="/shop" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
                     Shop Now
                   </a>
                 </div>
@@ -101,7 +112,7 @@ import Header from "../components/Header.vue";
             <div class="block1 wrap-pic-w">
               <img src="/images/banner-01.jpg" alt="IMG-BANNER">
 
-              <a href="product.html" class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
+              <a href="/shop" class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
                 <div class="block1-txt-child1 flex-col-l">
 								<span class="block1-name ltext-102 trans-04 p-b-8">
 									Women
@@ -126,7 +137,7 @@ import Header from "../components/Header.vue";
             <div class="block1 wrap-pic-w">
               <img src="/images/banner-02.jpg" alt="IMG-BANNER">
 
-              <a href="product.html" class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
+              <a href="/shop" class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
                 <div class="block1-txt-child1 flex-col-l">
 								<span class="block1-name ltext-102 trans-04 p-b-8">
 									Men
@@ -151,7 +162,7 @@ import Header from "../components/Header.vue";
             <div class="block1 wrap-pic-w">
               <img src="/images/banner-03.jpg" alt="IMG-BANNER">
 
-              <a href="product.html" class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
+              <a href="/shop" class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
                 <div class="block1-txt-child1 flex-col-l">
 								<span class="block1-name ltext-102 trans-04 p-b-8">
 									Accessories
@@ -426,12 +437,15 @@ import Header from "../components/Header.vue";
           </div>
         </div>
 
+
+
+        <!-- List of Products -->
         <div class="row isotope-grid">
-          <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
+          <div v-for="product in products" :key="product.id" :class="`col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item ${product.category.name}`">
             <!-- Block2 -->
             <div class="block2">
               <div class="block2-pic hov-img0">
-                <img src="/images/product-01.jpg" alt="IMG-PRODUCT">
+                <img :src="`http://127.0.0.1:8000/storage/${product.photo}`" alt="IMG-PRODUCT">
 
                 <a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
                   Quick View
@@ -441,11 +455,11 @@ import Header from "../components/Header.vue";
               <div class="block2-txt flex-w flex-t p-t-14">
                 <div class="block2-txt-child1 flex-col-l ">
                   <a href="/product-detail" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-                    Esprit Ruffle Shirt
+                    {{product.name}}
                   </a>
 
                   <span class="stext-105 cl3">
-									$16.64
+									${{product.price}}.50
 								</span>
                 </div>
 
@@ -459,8 +473,8 @@ import Header from "../components/Header.vue";
             </div>
           </div>
 
-          <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
-            <!-- Block2 -->
+<!--          <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
+            &lt;!&ndash; Block2 &ndash;&gt;
             <div class="block2">
               <div class="block2-pic hov-img0">
                 <img src="/images/product-02.jpg" alt="IMG-PRODUCT">
@@ -492,7 +506,7 @@ import Header from "../components/Header.vue";
           </div>
 
           <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item men">
-            <!-- Block2 -->
+            &lt;!&ndash; Block2 &ndash;&gt;
             <div class="block2">
               <div class="block2-pic hov-img0">
                 <img src="/images/product-03.jpg" alt="IMG-PRODUCT">
@@ -524,7 +538,7 @@ import Header from "../components/Header.vue";
           </div>
 
           <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
-            <!-- Block2 -->
+            &lt;!&ndash; Block2 &ndash;&gt;
             <div class="block2">
               <div class="block2-pic hov-img0">
                 <img src="/images/product-04.jpg" alt="IMG-PRODUCT">
@@ -556,7 +570,7 @@ import Header from "../components/Header.vue";
           </div>
 
           <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
-            <!-- Block2 -->
+            &lt;!&ndash; Block2 &ndash;&gt;
             <div class="block2">
               <div class="block2-pic hov-img0">
                 <img src="/images/product-05.jpg" alt="IMG-PRODUCT">
@@ -588,7 +602,7 @@ import Header from "../components/Header.vue";
           </div>
 
           <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item watches">
-            <!-- Block2 -->
+            &lt;!&ndash; Block2 &ndash;&gt;
             <div class="block2">
               <div class="block2-pic hov-img0">
                 <img src="/images/product-06.jpg" alt="IMG-PRODUCT">
@@ -620,7 +634,7 @@ import Header from "../components/Header.vue";
           </div>
 
           <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
-            <!-- Block2 -->
+            &lt;!&ndash; Block2 &ndash;&gt;
             <div class="block2">
               <div class="block2-pic hov-img0">
                 <img src="/images/product-07.jpg" alt="IMG-PRODUCT">
@@ -652,7 +666,7 @@ import Header from "../components/Header.vue";
           </div>
 
           <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
-            <!-- Block2 -->
+            &lt;!&ndash; Block2 &ndash;&gt;
             <div class="block2">
               <div class="block2-pic hov-img0">
                 <img src="/images/product-08.jpg" alt="IMG-PRODUCT">
@@ -684,7 +698,7 @@ import Header from "../components/Header.vue";
           </div>
 
           <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item shoes">
-            <!-- Block2 -->
+            &lt;!&ndash; Block2 &ndash;&gt;
             <div class="block2">
               <div class="block2-pic hov-img0">
                 <img src="/images/product-09.jpg" alt="IMG-PRODUCT">
@@ -716,7 +730,7 @@ import Header from "../components/Header.vue";
           </div>
 
           <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
-            <!-- Block2 -->
+            &lt;!&ndash; Block2 &ndash;&gt;
             <div class="block2">
               <div class="block2-pic hov-img0">
                 <img src="/images/product-10.jpg" alt="IMG-PRODUCT">
@@ -748,7 +762,7 @@ import Header from "../components/Header.vue";
           </div>
 
           <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item men">
-            <!-- Block2 -->
+            &lt;!&ndash; Block2 &ndash;&gt;
             <div class="block2">
               <div class="block2-pic hov-img0">
                 <img src="/images/product-11.jpg" alt="IMG-PRODUCT">
@@ -780,7 +794,7 @@ import Header from "../components/Header.vue";
           </div>
 
           <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item men">
-            <!-- Block2 -->
+            &lt;!&ndash; Block2 &ndash;&gt;
             <div class="block2">
               <div class="block2-pic hov-img0">
                 <img src="/images/product-12.jpg" alt="IMG-PRODUCT">
@@ -812,7 +826,7 @@ import Header from "../components/Header.vue";
           </div>
 
           <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
-            <!-- Block2 -->
+            &lt;!&ndash; Block2 &ndash;&gt;
             <div class="block2">
               <div class="block2-pic hov-img0">
                 <img src="/images/product-13.jpg" alt="IMG-PRODUCT">
@@ -844,7 +858,7 @@ import Header from "../components/Header.vue";
           </div>
 
           <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
-            <!-- Block2 -->
+            &lt;!&ndash; Block2 &ndash;&gt;
             <div class="block2">
               <div class="block2-pic hov-img0">
                 <img src="/images/product-14.jpg" alt="IMG-PRODUCT">
@@ -876,7 +890,7 @@ import Header from "../components/Header.vue";
           </div>
 
           <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item watches">
-            <!-- Block2 -->
+            &lt;!&ndash; Block2 &ndash;&gt;
             <div class="block2">
               <div class="block2-pic hov-img0">
                 <img src="/images/product-15.jpg" alt="IMG-PRODUCT">
@@ -908,7 +922,7 @@ import Header from "../components/Header.vue";
           </div>
 
           <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
-            <!-- Block2 -->
+            &lt;!&ndash; Block2 &ndash;&gt;
             <div class="block2">
               <div class="block2-pic hov-img0">
                 <img src="/images/product-16.jpg" alt="IMG-PRODUCT">
@@ -937,12 +951,12 @@ import Header from "../components/Header.vue";
                 </div>
               </div>
             </div>
-          </div>
+          </div>-->
         </div>
 
         <!-- Load more -->
         <div class="flex-c-m flex-w w-full p-t-45">
-          <a href="#" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
+          <a href="/shop" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
             Load More
           </a>
         </div>
