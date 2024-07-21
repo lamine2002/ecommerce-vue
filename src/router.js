@@ -6,6 +6,7 @@ import Contact from './Pages/Contact.vue';
 import ShopingCart from "./Pages/ShopingCart.vue";
 import ProductDetail from "./Pages/ProductDetail.vue";
 import Checkout from "./Pages/Checkout.vue";
+import TrackOrder from "./Pages/TrackOrder.vue";
 
 
 const routes = [
@@ -23,6 +24,10 @@ const routes = [
     {
         path: '/checkout',
         component: Checkout
+    },
+    {
+        path: '/track-order',
+        component: TrackOrder
     }
 ];
 

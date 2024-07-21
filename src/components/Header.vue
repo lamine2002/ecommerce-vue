@@ -16,7 +16,7 @@ watch(cartState.items, () => {
   updateNumberOfItems();
 });
 
-
+updateNumberOfItems();
 </script>
 
 <template>
