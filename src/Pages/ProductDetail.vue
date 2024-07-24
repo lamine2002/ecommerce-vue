@@ -5,6 +5,7 @@ import {useRoute} from "vue-router";
 import axios from "axios";
 import {ref} from "vue";
 import {addToCart} from "../state/cartState.js";
+import Swal from "sweetalert2";
 
 const route = useRoute();
 const productId = route.params.id;
@@ -28,6 +29,11 @@ console.log(quantity.value);
 const addToCartHandler = () => {
   if (product.value && quantity.value > 0) {
     addToCart({ ...product.value, price: parseFloat(product.value.price), quantity: quantity.value });
+    Swal.fire({
+      title: "Fait !",
+      text: "Produit ajouté au panier",
+      icon: "success"
+    });
   }
 };
 </script>

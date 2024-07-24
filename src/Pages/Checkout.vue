@@ -1,9 +1,10 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { cartState, clearCart } from '../state/cartState';
 import { useRouter } from 'vue-router';
 import Header from "../components/Header.vue";
+import Swal from "sweetalert2";
 
 const router = useRouter();
 const customer_id = ref(-1);
@@ -11,23 +12,52 @@ const firstname = ref('');
 const lastname = ref('');
 const address = ref('');
 const phone = ref('');
-const sex = ref('male'); // default value
-const payment = ref('Espece'); // default value
+const sex = ref('male');
+const payment = ref('Espece');
 const isLoading = ref(false);
 const errorMessage = ref('');
+
+// Fonction pour sauvegarder les informations du client
+const saveCustomerInfo = () => {
+  const customerInfo = {
+    firstname: firstname.value,
+    lastname: lastname.value,
+    address: address.value,
+    phone: phone.value,
+    sex: sex.value
+  };
+  localStorage.setItem('customerInfo', JSON.stringify(customerInfo));
+};
+
+// Fonction pour récupérer les informations du client
+const getCustomerInfo = () => {
+  const storedInfo = localStorage.getItem('customerInfo');
+  if (storedInfo) {
+    const customerInfo = JSON.parse(storedInfo);
+    firstname.value = customerInfo.firstname;
+    lastname.value = customerInfo.lastname;
+    address.value = customerInfo.address;
+    phone.value = customerInfo.phone;
+    sex.value = customerInfo.sex;
+  }
+};
+
+// Charger les informations du client au montage du composant
+onMounted(() => {
+  getCustomerInfo();
+});
 
 const handleSubmit = async () => {
   isLoading.value = true;
   errorMessage.value = '';
   const orderData = {
-    customer_id: customer_id.value, // Mettre à jour si le client existe déjà
+    customer_id: customer_id.value,
     firstname: firstname.value,
     lastname: lastname.value,
     address: address.value,
     phone: phone.value,
     sex: sex.value,
     payment: payment.value,
-    // total en string pour éviter les problèmes de précision
     total: cartState.total.toString(),
     products: cartState.items.map(item => item.id),
     quantities: cartState.items.map(item => item.quantity),
@@ -37,9 +67,17 @@ const handleSubmit = async () => {
   try {
     const response = await axios.post('http://127.0.0.1:8000/api/make-order', orderData);
     if (response.data.status === 200) {
-      alert('Commande enregistrée avec succès');
+      // Sauvegarder les informations du client
+      saveCustomerInfo();
+
+      Swal.fire({
+        title: "Fait !",
+        text: "Commande enregistrée avec succès",
+        icon: "success"
+      });
+
       clearCart();
-      // router.push('/confirmation');
+      router.push('/home');
     } else {
       errorMessage.value = response.data.message;
     }
