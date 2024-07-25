@@ -17,34 +17,44 @@ const payment = ref('Espece');
 const isLoading = ref(false);
 const errorMessage = ref('');
 
-// Fonction pour sauvegarder les informations du client
-const saveCustomerInfo = () => {
-  const customerInfo = {
-    firstname: firstname.value,
-    lastname: lastname.value,
-    address: address.value,
-    phone: phone.value,
-    sex: sex.value
-  };
-  localStorage.setItem('customerInfo', JSON.stringify(customerInfo));
-};
+const checkExistingCustomer = async () => {
+  const { value: phoneNumber } = await Swal.fire({
+    title: 'Avez-vous déjà commandé ?',
+    input: 'tel',
+    inputLabel: 'Si oui, entrez votre numéro de téléphone',
+    inputPlaceholder: 'Entrez votre numéro de téléphone',
+    showCancelButton: true,
+    cancelButtonText: 'Non, je suis nouveau',
+    inputValidator: (value) => {
+      if (!value) {
+        return 'Vous devez entrer un numéro de téléphone'
+      }
+    }
+  });
 
-// Fonction pour récupérer les informations du client
-const getCustomerInfo = () => {
-  const storedInfo = localStorage.getItem('customerInfo');
-  if (storedInfo) {
-    const customerInfo = JSON.parse(storedInfo);
-    firstname.value = customerInfo.firstname;
-    lastname.value = customerInfo.lastname;
-    address.value = customerInfo.address;
-    phone.value = customerInfo.phone;
-    sex.value = customerInfo.sex;
+  if (phoneNumber) {
+    try {
+      const response = await axios.get(`http://127.0.0.1:8000/api/customers/${phoneNumber}`);
+      if (response.data.status === 200) {
+        const customer = response.data.customer;
+        customer_id.value = customer.id;
+        firstname.value = customer.firstname;
+        lastname.value = customer.lastname;
+        address.value = customer.address;
+        phone.value = customer.phone;
+        sex.value = customer.sex;
+
+        Swal.fire('Bienvenue de retour!', 'Vos informations ont été pré-remplies.', 'success');
+      }
+    } catch (error) {
+      console.error('Erreur lors de la récupération du client:', error);
+      Swal.fire('Client non trouvé', 'Veuillez remplir vos informations.', 'info');
+    }
   }
 };
 
-// Charger les informations du client au montage du composant
 onMounted(() => {
-  getCustomerInfo();
+  checkExistingCustomer();
 });
 
 const handleSubmit = async () => {
@@ -67,9 +77,6 @@ const handleSubmit = async () => {
   try {
     const response = await axios.post('http://127.0.0.1:8000/api/make-order', orderData);
     if (response.data.status === 200) {
-      // Sauvegarder les informations du client
-      saveCustomerInfo();
-
       Swal.fire({
         title: "Fait !",
         text: "Commande enregistrée avec succès",
@@ -77,7 +84,10 @@ const handleSubmit = async () => {
       });
 
       clearCart();
-      router.push('/home');
+      // utiliser href ou lieu de router pour rediriger vers la page d'accueil
+      // router.push('/');
+      window.location.href = '/';
+
     } else {
       errorMessage.value = response.data.message;
     }
@@ -89,6 +99,7 @@ const handleSubmit = async () => {
   }
 };
 </script>
+
 
 <template>
   <div class="animsition">
